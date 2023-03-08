@@ -2,8 +2,8 @@
 #include <string>
 using namespace std;
 // WiFi credentials
-const char * SSID = "ChamplainPSK";
-const char * PASSWORD = "letusdare";
+char * SSID = "ChamplainPSK";
+char * PASSWORD = "letusdare";
 
 //const char * SSID = "GungorGuest";
 //const char * PASSWORD = "welcomehome";

@@ -1,10 +1,11 @@
 #include <Arduino.h>
 #include <WiFiNINA.h>
 #include <PubSubClient.h>
-
-#include <iostream>
-#include <fstream>
-using namespace std;
+//#include "thingProperties.h"
+#include <Arduino_MKRIoTCarrier.h>
+#include <ArduinoIoTCloud.h>
+#include <SNU.h>
+MKRIoTCarrier carrier;
 
 #include "config.h"
 
@@ -73,25 +74,31 @@ void createMQTTClient()
 }
 
 void setup() {
-  Serial.begin(9600);
-
-  while (!Serial)
+    Serial.begin(9600);
+    while (!Serial)
     ; // Wait for Serial to be ready
 
-  pinMode(LED_BUILTIN, OUTPUT);
-  connectWiFi();
-  createMQTTClient();
+    float temperature;
+    ArduinoCloud.addProperty(temperature, READ, 1 * SECONDS, NULL);
+
+    delay(500);
+    CARRIER_CASE = false;
+    carrier.begin();
+    carrier.display.setRotation(0);
+    delay(1500);
+
+    pinMode(LED_BUILTIN, OUTPUT);
+    connectWiFi();
+    createMQTTClient();
 }
 
 void loop() {
-  reconnectMQTTClient();
-  client.loop();
-
-  Serial.println("Sending telemetry messages");
-  
-  string telemetry = "TurnON";  
-
-  client.publish(CLIENT_TELEMETRY_TOPIC.c_str(), telemetry.c_str());
-
-  delay(10000);
+    int temperature = carrier.Env.readTemperature();
+    reconnectMQTTClient();
+    client.loop();
+    Serial.println("Sending telemetry messages");
+    //string telemetry = "TurnON"; 
+    string telemetry = to_string(temperature);  
+    client.publish(CLIENT_TELEMETRY_TOPIC.c_str(), telemetry.c_str());
+    delay(10000);
 }
