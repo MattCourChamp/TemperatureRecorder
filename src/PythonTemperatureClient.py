@@ -1,7 +1,7 @@
 import json
 import time
 import paho.mqtt.client as mqtt
-from datetime import date
+from datetime import datetime
 
 id = 'MattCourChamp'
 
@@ -21,7 +21,7 @@ def handle_telemetry(client, userdata, message):
     # print("Sending message:", command)
     # client.publish(server_command_topic, command)
     myFile = open("temperatures.txt", "w")
-    myFile.write(str(date.today().strftime("%m/%d/%y")) + ": " + payload + " Celcius")
+    myFile.write(str(datetime.now().strftime("%m/%d/%y %H:%M:%S")) + " - " + payload + " Celcius")
     myFile.close()
     time.sleep(10)
 
