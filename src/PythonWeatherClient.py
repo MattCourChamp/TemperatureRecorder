@@ -17,11 +17,8 @@ mqtt_client.loop_start()
 def handle_telemetry(client, userdata, message):
     payload = message.payload.decode()
     print("Message received:", payload)
-    # command = 'TurnOFF'
-    # print("Sending message:", command)
-    # client.publish(server_command_topic, command)
-    myFile = open("temperatures.txt", "w")
-    myFile.write(str(datetime.now().strftime("%m/%d/%y %H:%M:%S")) + " - " + payload + " Celcius")
+    myFile = open("weatherReports.txt", "a")
+    myFile.write(str(datetime.now().strftime("%m/%d/%y %H:%M:%S")) + " - " + payload + "\n")
     myFile.close()
     time.sleep(10)
 

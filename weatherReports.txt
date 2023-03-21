@@ -1,0 +1,8 @@
+03/21/23 18:47:31 - 25 Celcius, 27% Humidity
+03/21/23 18:47:41 - 25 Celcius, 26% Humidity
+03/21/23 18:47:51 - 25 Celcius, 26% Humidity
+03/21/23 18:48:01 - 25 Celcius, 26% Humidity
+03/21/23 18:48:11 - 25 Celcius, 26% Humidity
+03/21/23 18:48:21 - 25 Celcius, 26% Humidity
+03/21/23 18:48:31 - 25 Celcius, 26% Humidity
+03/21/23 18:48:41 - 25 Celcius, 26% Humidity

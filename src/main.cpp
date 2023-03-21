@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include <WiFiNINA.h>
 #include <PubSubClient.h>
-//#include "thingProperties.h"
 #include <Arduino_MKRIoTCarrier.h>
 #include <ArduinoIoTCloud.h>
 #include <SNU.h>
@@ -79,7 +78,9 @@ void setup() {
     ; // Wait for Serial to be ready
 
     float temperature;
+    float humidity;
     ArduinoCloud.addProperty(temperature, READ, 1 * SECONDS, NULL);
+    ArduinoCloud.addProperty(humidity, READ, 1 * SECONDS, NULL);
 
     delay(500);
     CARRIER_CASE = false;
@@ -97,17 +98,14 @@ unsigned long time_now = 0;
 #define INTERVAL_MESSAGE 10000
 
 void loop() {
-    //Serial.println("waiting...");
     if(millis() > time_now + INTERVAL_MESSAGE){
         time_now = millis();
         int temperature = carrier.Env.readTemperature();
+        int humidity = carrier.Env.readHumidity();
         reconnectMQTTClient();
         client.loop();
         Serial.println("Sending telemetry messages");
-        //string telemetry = "TurnON"; 
-        string telemetry = to_string(temperature);  
+        string telemetry = to_string(temperature) + " Celcius, " + to_string(humidity) + "% Humidity";  
         client.publish(CLIENT_TELEMETRY_TOPIC.c_str(), telemetry.c_str());
-        //delay(10000);
     }
-    //Serial.println("wait over");
 }
